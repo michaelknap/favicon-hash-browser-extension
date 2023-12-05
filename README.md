@@ -1,5 +1,5 @@
 # Favicon Hash for Shodan (Firefox Extension)
-This extension calculates the MurmurHash3 hash of website favicons and displays the results in a popup, suitable for searches on the Shodan Search Engine.
+This extension calculates the MurmurHash3 hash of an active tab's favicon and displays the result in a popup, suitable for searches on the Shodan Search Engine.
 
 ## Screenshot
 

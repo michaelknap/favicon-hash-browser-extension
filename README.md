@@ -3,4 +3,4 @@ This extension calculates the MurmurHash3 hash of website favicons and displays 
 
 ## Screenshot
 
-![Favicon Hash for Shodan Screenshot](screenshot/screenshot.png)
+![Favicon Hash for Shodan Screenshot](screenshot/screenshot.jpeg)

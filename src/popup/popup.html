@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Favicon Hash</title>
+        <style>
+        body {
+        background-color: #ECEFF4;
+        font-family: Arial, sans-serif; /* Optional: Improved font */
+        line-height: 1.2rem;
+        }
+        a {
+        color: #3b4252;
+        text-decoration: none;
+        }
+        a:hover {
+        text-decoration: underline;
+        }
+        #favicons-container {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        }
+        #favicons-container th, #favicons-container td {
+        padding: 10px;
+        border: 1px solid #ddd;
+        }
+        #favicons-container th {
+        background-color: #4C566A;
+        color: white;
+        }
+        .tiny-link {
+        font-size: 10px;
+        color: #555;
+        }
+        </style>
+    </head>
+    <body>
+        <div id="hash-container">
+            <table id="favicons-container">
+                <tr>
+                    <th>Favicon</th>
+                    <th>Hash</th>
+                    <th>Url</th>
+                </tr>
+            </table>
+        </div>
+        <script src="../lib/murmurhash3.js"></script>
+        <script src="popup.js"></script>
+    </body>
+</html>

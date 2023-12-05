@@ -1,0 +1,25 @@
+{
+  "manifest_version": 2,
+  "name": "Favicon Hash Generator",
+  "version": "1.0",
+  "description": "Generates MurmurHash3 hash from website favicon. Compliant with hashing method used by Shodan Search Engine (shodan.io).",
+  "developer": {
+    "name": "Michael Knap",
+    "url": "https://github.com/michaelknap/favicon-hash-browser-extension"
+  },
+  "icons": {
+    "48": "icons/icon.svg",
+    "96": "icons/icon.svg",
+    "128": "icons/icon.svg"
+  },
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "*://*/*" // Allows access to any URL, bypass CORS
+  ],
+  "browser_action": {
+    "default_icon": "icons/icon.svg",
+    "default_popup": "popup/popup.html"
+  },
+  "content_security_policy": "script-src 'self'; object-src 'self'"
+}

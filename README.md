@@ -4,6 +4,9 @@ This extension calculates the [MurmurHash3](https://en.wikipedia.org/wiki/Murmur
 ```bash
 https://www.shodan.io/search?query=http.favicon.hash:<hash_value>
 ```
+## Installation
+
+Install directly from [Mozzila Add-on Store](https://addons.mozilla.org/en-GB/firefox/addon/favicon-hash-for-shodan/).
 
 ## Screenshot
 

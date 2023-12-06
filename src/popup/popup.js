@@ -27,12 +27,21 @@ document.addEventListener('DOMContentLoaded', function() {
     for (let i = 0; i < bytes.byteLength; i++) {
       data += String.fromCharCode(bytes[i]);
     }
-    // Adding newline characters after every 76 characters and at the end
+    const base64 = window.btoa(data);
+
+    // Adding newline characters after every 76th characters and at the end
     // because Shodan, in their implementation, chose to use base64.encodebytes() or
     // codecs.encode(data, "base64") as opposed to base64.b64encode() like a sane person would.
-    return window.btoa(data)
-      .match(/.{1,76}/g)
-      .join('\n') + '\n';
+
+    // Split into 76 character chunks and join with newline
+    let base64_with_newlines = (base64.match(/.{1,76}/g) || []).join('\n');
+
+    // Ensure there's only a single newline at the end
+    if (!base64_with_newlines.endsWith('\n')) {
+      base64_with_newlines += '\n';
+    }
+
+    return base64_with_newlines;
   }
 
   const fetch_and_hash_favicon = (favicon_url, callback) => {
@@ -107,9 +116,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Script to be executed in the context of the webpage to find icon links.
     function in_content_script() {
-      const link_elements = document.querySelectorAll(
-        'link[rel="icon"], link[rel="shortcut icon"], link[rel="icon shortcut"]'
-      );
+      const link_elements = document.querySelectorAll("link[rel*='icon']");
       return Array.from(link_elements)
         .map(el => el.href);
     }

@@ -68,14 +68,17 @@ function mmh3(input, seed = 0) {
   }
 
   let tail_value = 0;
+  let tail_index = num_rounds * 4;
 
   switch (input_length % 4) {
     case 3:
-      tail_value ^= (input.charCodeAt(input_length - 1) & 0xff) << 16;
+      tail_value ^= (input.charCodeAt(tail_index + 2) & 0xff) << 16;
+      // fall through
     case 2:
-      tail_value ^= (input.charCodeAt(input_length - 2) & 0xff) << 8;
+      tail_value ^= (input.charCodeAt(tail_index + 1) & 0xff) << 8;
+      // fall through
     case 1:
-      tail_value ^= (input.charCodeAt(input_length - 3) & 0xff);
+      tail_value ^= (input.charCodeAt(tail_index) & 0xff);
       tail_value = (((tail_value & 0xffff) * const_multiplier_1) + ((((
           tail_value >>> 16) * const_multiplier_1) & 0xffff) << 16)) &
         0xffffffff;

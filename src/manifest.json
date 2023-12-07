@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Favicon Hash Generator",
-  "version": "1.2",
+  "version": "1.3",
   "description": "Generates MurmurHash3 hash from website favicon. Compliant with hashing method used by Shodan Search Engine (shodan.io).",
   "developer": {
     "name": "Michael Knap",

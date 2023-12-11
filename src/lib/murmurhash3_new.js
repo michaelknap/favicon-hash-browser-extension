@@ -1,29 +1,3 @@
-/**
- * MurmurHash3 x86 32-bit JavaScript Implementation
- * 
- * This file contains a JavaScript implementation of the MurmurHash3 algorithm 
- * (x86 32-bit version), suitable for hashing string data.
- * The implementation provides a signed 32-bit hash value.
- *
- * This implementation is based on the MurmurHash3 Python module by Hajime Senuma.
- * Reference: https://github.com/hajimes/mmh3
- * 
- * MurmurHash is a non-cryptographic hash function suitable for general hash-based 
- * lookup. 
- * 
- * Usage:
- *   - Function `mmh3_32` takes a string input and an optional seed (default is 0).
- *   - It returns a signed 32-bit integer hash.
- * 
- * Note: This implementation is specifically designed for hashing string.
- * 
- * Example:
- *   let hash = mmh3_32('your_string_here');
- *   console.log(hash); // Outputs the signed 32-bit hash
- * 
- * Author: Michael Knap
- * License: MIT
- */
 function fmix32(h) {
   h ^= h >>> 16;
   h = Math.imul(h, 0x85ebca6b);

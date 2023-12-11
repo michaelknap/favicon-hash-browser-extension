@@ -20,32 +20,44 @@ document.addEventListener('DOMContentLoaded', function() {
   // Getting references to the DOM elements used in the script.
   const favicons_container = document.getElementById('favicons-container');
 
-  // Converts an ArrayBuffer to a Base64 string, formatted as per Shodan's expected input.
-  function array_buffer_to_base64(buffer) {
-    let data = '';
-    const bytes = new Uint8Array(buffer);
-    for (let i = 0; i < bytes.byteLength; i++) {
-      data += String.fromCharCode(bytes[i]);
-    }
-    const base64 = window.btoa(data);
+  // Revised version of arrayBufferToBase64 function
+  function arrayBufferToBase64(buffer) {
+    return new Promise((resolve, reject) => {
+      const blob = new Blob([buffer], {
+        type: 'application/octet-stream'
+      });
+      const reader = new FileReader();
+      reader.onloadend = function() {
+        let base64data = reader.result;
+        console.log(base64data);
+        base64data = base64data.replace(/^data:.*?;base64,/, ''); // Remove the data URL part
 
-    // Adding newline characters after every 76th characters and at the end
-    // because Shodan, in their implementation, chose to use base64.encodebytes() or
-    // codecs.encode(data, "base64") as opposed to base64.b64encode() like a sane person would.
+        // Adding newline characters after every 76th characters
+        let base64_with_newlines = (base64data.match(/.{1,76}/g) || [])
+          .join('\n');
 
-    // Split into 76 character chunks and join with newline
-    let base64_with_newlines = (base64.match(/.{1,76}/g) || []).join('\n');
+        // Ensure there's only a single newline at the end
+        if (!base64_with_newlines.endsWith('\n')) {
+          base64_with_newlines += '\n';
+        }
 
-    // Ensure there's only a single newline at the end
-    if (!base64_with_newlines.endsWith('\n')) {
-      base64_with_newlines += '\n';
-    }
-
-    return base64_with_newlines;
+        resolve(base64_with_newlines);
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
   }
 
+  // Updated fetch_and_hash_favicon function
   const fetch_and_hash_favicon = (favicon_url, callback) => {
-    fetch(favicon_url)
+    fetch(favicon_url, {
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+          'Expires': '0',
+          'User-Agent': 'curl/7.54.1'
+        }
+      })
       .then(response => {
         if (!response.ok) {
           throw new Error('Favicon not found');
@@ -53,8 +65,13 @@ document.addEventListener('DOMContentLoaded', function() {
         return response.arrayBuffer();
       })
       .then(array_buffer => {
-        const base64_string = array_buffer_to_base64(array_buffer);
-        const hash = mmh3(base64_string); //Compute mmh3 hash. 
+        return arrayBufferToBase64(array_buffer); // Use the revised function
+      })
+      .then(base64_string => {
+        console.log(base64_string);
+        const hash = mmh3_32(base64_string); // Compute mmh3 hash
+        console.log(hash);
+
         callback(favicon_url, hash);
       })
       .catch(error => console.error('Error fetching favicon:', error));

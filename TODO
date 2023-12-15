@@ -1,2 +1,3 @@
 - Show favicon.ico as first result
-- Make some better icons
+- Implement fetch with different user agent. Some favicons, especially those in PNG format may be optimized by CDNs etc,
+  fetching with curl agent may yeld original file hash. It is unclear how Shodan crawls the icons so perhaps both versions need to be displayed.
